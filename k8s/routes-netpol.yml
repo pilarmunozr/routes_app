@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: routes-db-allow-from-routes-app
+spec:
+  podSelector:
+    matchLabels:
+      app: routes-db
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: routes-app
+      ports:
+        - protocol: TCP
+          port: 5432
